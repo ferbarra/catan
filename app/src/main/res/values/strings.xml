@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Catan</string>
+    <string name="regular_map_button">2 to 4 players</string>
+    <string name="extended_map_button">5 to 6 players</string>
 </resources>
