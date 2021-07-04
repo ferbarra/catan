@@ -6,10 +6,12 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/regular_board_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/regular_map_button"/>
     <Button
+        android:id="@+id/extended_board_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/extended_map_button"/>
