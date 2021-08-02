@@ -11,6 +11,7 @@ class BoardFragmentViewModel : ViewModel() {
     private lateinit var board: List<Hex>
 
     private var currentHexIndex = 0
+
     private val initialResources: Map<Hex, Int>
         get() = when (size) {
                 BoardSize.EXTENDED -> mapOf(
@@ -81,22 +82,15 @@ class BoardFragmentViewModel : ViewModel() {
         return prevHex
     }
 
+    /**
+     * Shows the position of the current hex in the board
+     */
+    fun getCurrentHexIndex() = currentHexIndex
+
     private fun createBoard() : List<Hex> {
     val board = mutableListOf<Hex>()
-        val hexTypesCount = Hex.values().size
-        for (i in 0..hexCount) {
-            // for now just add hexes to the board in round robin fashion
-            val hexValue = i % hexTypesCount
-            val hex = Hex.from(hexValue)
-                ?: throw IllegalStateException("$hexValue does not correspond to Hex enum")
-            board.add(hex)
-        }
-        return board
-    }
-
-    private fun initialResources () : Map<Hex, Int> {
-        return when (size) {
-            BoardSize.EXTENDED -> mapOf(
+        val availableHexes = if (size == BoardSize.EXTENDED) {
+            mutableMapOf(
                 Hex.DESSERT to 2,
                 Hex.FIELD to 6,
                 Hex.FOREST to 6,
@@ -104,7 +98,8 @@ class BoardFragmentViewModel : ViewModel() {
                 Hex.MOUNTAIN to 5,
                 Hex.HILL to 5,
             )
-            BoardSize.REGULAR -> mapOf(
+        } else {
+            mutableMapOf(
                 Hex.DESSERT to 1,
                 Hex.FIELD to 4,
                 Hex.FOREST to 4,
@@ -113,6 +108,25 @@ class BoardFragmentViewModel : ViewModel() {
                 Hex.HILL to 3,
             )
         }
+        val hexTypesCount = Hex.values().size
+        for (x in 0 until hexCount) {
+            while (true) {
+                // generate random number between 0 and 5 to represent a hex.
+                val hexValue = (0 until hexTypesCount).random()
+                val hex = Hex.from(hexValue)
+                    ?: throw IllegalStateException("$hexValue does not correspond to Hex enum.")
+
+                val remaining = availableHexes[hex]
+                    ?: throw IllegalStateException("$hexValue does not have a defined quantity.")
+
+                if (remaining == 0) continue // keep looking
+
+                board.add(hex)
+                availableHexes[hex] = remaining - 1
+                break
+            }
+        }
+        return board
     }
 
 }
