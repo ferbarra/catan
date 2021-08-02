@@ -12,6 +12,8 @@ class BoardFragmentViewModel : ViewModel() {
 
     private var currentHexIndex = 0
 
+    val position: Int get() = currentHexIndex + 1 // users prefer base 1 instead of 0
+
     private val initialResources: Map<Hex, Int>
         get() = when (size) {
                 BoardSize.EXTENDED -> mapOf(
@@ -81,11 +83,6 @@ class BoardFragmentViewModel : ViewModel() {
         currentHexIndex = newHexIndex
         return prevHex
     }
-
-    /**
-     * Shows the position of the current hex in the board
-     */
-    fun getCurrentHexIndex() = currentHexIndex
 
     private fun createBoard() : List<Hex> {
     val board = mutableListOf<Hex>()

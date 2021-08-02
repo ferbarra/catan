@@ -36,15 +36,20 @@ class BoardFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_board, container, false)
         val currentHexTextView = view.findViewById<TextView>(R.id.current_hex)
+        val positionTextView = view.findViewById<TextView>(R.id.position)
         val prevHexButton = view.findViewById<Button>(R.id.previous_hex)
         val nextHexButton = view.findViewById<Button>(R.id.next_hex)
 
         currentHexTextView.text = viewModel.currentHex().toString()
+        positionTextView.text = viewModel.position.toString()
+
         prevHexButton.setOnClickListener {
             currentHexTextView.text = viewModel.prevHex().toString()
+            positionTextView.text = viewModel.position.toString()
         }
         nextHexButton.setOnClickListener {
             currentHexTextView.text = viewModel.nextHex().toString()
+            positionTextView.text = viewModel.position.toString()
         }
         return view
     }
