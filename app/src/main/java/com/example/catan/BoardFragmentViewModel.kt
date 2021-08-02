@@ -14,25 +14,6 @@ class BoardFragmentViewModel : ViewModel() {
 
     val position: Int get() = currentHexIndex + 1 // users prefer base 1 instead of 0
 
-    private val initialResources: Map<Hex, Int>
-        get() = when (size) {
-                BoardSize.EXTENDED -> mapOf(
-                    Hex.DESSERT to 2,
-                    Hex.FIELD to 6,
-                    Hex.FOREST to 6,
-                    Hex.PASTURE to 6,
-                    Hex.MOUNTAIN to 5,
-                    Hex.HILL to 5,
-                )
-                BoardSize.REGULAR -> mapOf(
-                    Hex.DESSERT to 1,
-                    Hex.FIELD to 4,
-                    Hex.FOREST to 4,
-                    Hex.PASTURE to 4,
-                    Hex.MOUNTAIN to 3,
-                    Hex.HILL to 3,
-                )
-            }
     private val hexCount: Int get() = if (size == BoardSize.EXTENDED) 30 else 19
 
     /**
