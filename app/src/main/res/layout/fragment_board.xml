@@ -27,6 +27,17 @@
         android:textSize="36sp"
         tools:text="Field" />
 
+    <TextView
+        android:id="@+id/same_in_a_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/current_hex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="5 in a row"/>
+
     <Button
         android:id="@+id/previous_hex"
         android:layout_width="wrap_content"

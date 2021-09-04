@@ -107,6 +107,15 @@ class BoardFragmentViewModel : ViewModel() {
         return board
     }
 
+    fun sameInARow(): Int {
+        val hex = currentHex()
+        var count = 0
+        for (n in currentHexIndex downTo 0) {
+            if (hex != board[n]) break
+            count += 1
+        }
+        return count
+    }
 }
 
 enum class Hex(val value: Int) {

@@ -17,6 +17,8 @@ class BoardFragment : Fragment() {
     private val args: BoardFragmentArgs by navArgs()
     private val viewModel by viewModels<BoardFragmentViewModel>()
 
+    private lateinit var sameInARowTextView: TextView
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModel.initialize(args.size)
@@ -37,20 +39,29 @@ class BoardFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_board, container, false)
         val currentHexTextView = view.findViewById<TextView>(R.id.current_hex)
         val positionTextView = view.findViewById<TextView>(R.id.position)
+        sameInARowTextView = view.findViewById<TextView>(R.id.same_in_a_row)
         val prevHexButton = view.findViewById<Button>(R.id.previous_hex)
         val nextHexButton = view.findViewById<Button>(R.id.next_hex)
 
         currentHexTextView.text = viewModel.currentHex().toString()
         positionTextView.text = viewModel.position.toString()
+        updateSameInARow()
 
         prevHexButton.setOnClickListener {
             currentHexTextView.text = viewModel.prevHex().toString()
             positionTextView.text = viewModel.position.toString()
+            updateSameInARow()
         }
         nextHexButton.setOnClickListener {
             currentHexTextView.text = viewModel.nextHex().toString()
             positionTextView.text = viewModel.position.toString()
+            updateSameInARow()
         }
         return view
+    }
+
+    fun updateSameInARow() {
+        val sameInARow = viewModel.sameInARow()
+        sameInARowTextView.text = if (sameInARow > 1) "$sameInARow in a row" else ""
     }
 }
